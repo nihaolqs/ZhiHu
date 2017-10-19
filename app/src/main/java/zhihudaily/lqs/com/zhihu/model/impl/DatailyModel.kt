@@ -7,6 +7,7 @@ import zhihudaily.lqs.com.zhihu.model.interfac.IDatailyModel
 import zhihudaily.lqs.com.zhihu.model.interfac.IModel
 import zhihudaily.lqs.com.zhihu.model.mapper.DataMapper
 import zhihudaily.lqs.com.zhihu.presenter.impl.DatailyPresenter
+import zhihudaily.lqs.com.zhihu.provider.impl.NewsProvider
 import kotlin.properties.Delegates
 
 /**
@@ -16,15 +17,13 @@ class DatailyModel : IDatailyModel, IModel<DatailyPresenter> {
 
     override var presenter: DatailyPresenter by Delegates.notNull<DatailyPresenter>()
 
-    val comment: DatailyComment by lazy { DatailyComment() }
+    val provider: NewsProvider by lazy { NewsProvider.instance }
 
     override fun getData(id: Long) {
         doAsync {
-            comment.id = id
-            val news = comment.execute()
-            val newsVo = DataMapper.instance.mapperNews2NewsVo(news)
+            val newsVo = provider.getNewsById(id)
             uiThread {
-                presenter.notifiReplaceData(newsVo)
+                presenter.notifiReplaceData(newsVo!!)
             }
         }
     }

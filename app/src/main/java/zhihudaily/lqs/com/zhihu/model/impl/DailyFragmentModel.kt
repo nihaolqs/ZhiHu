@@ -11,6 +11,7 @@ import zhihudaily.lqs.com.zhihu.model.interfac.IModel
 import zhihudaily.lqs.com.zhihu.model.mapper.DataMapper
 import zhihudaily.lqs.com.zhihu.presenter.impl.DailyFragmentPresenter
 import zhihudaily.lqs.com.zhihu.presenter.interfac.IPresenter
+import zhihudaily.lqs.com.zhihu.provider.impl.DailyProvider
 import zhihudaily.lqs.com.zhihu.utils.toFormatLongDay
 import java.util.*
 import kotlin.properties.Delegates
@@ -21,13 +22,11 @@ import kotlin.properties.Delegates
 class DailyFragmentModel : IModel<DailyFragmentPresenter>, IDailyFragmentModel {
     override var presenter: DailyFragmentPresenter by Delegates.notNull<DailyFragmentPresenter>()
 
-    val lastNewsComment: LastNewsComment by lazy { LastNewsComment() }
+    val dailyProvider by lazy { DailyProvider.instance }
 
     override fun getData(data: Long) {
         doAsync {
-            lastNewsComment.date = data
-            val daily = lastNewsComment.execute()
-            val vo = DataMapper.instance.mapperDaily2Vo(daily)
+            val vo = dailyProvider.getDailyByDay(data)
            uiThread {
                presenter.notifiDataForChange(vo)
            }

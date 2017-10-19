@@ -60,3 +60,36 @@ object NewsTable {
     val TYPE = "type"
     val ID = "_id"
 }
+
+class StoryDb(var map: MutableMap<String, Any?>) {
+    var _id: Long by map
+    var title: String by map
+    var image: String by map
+    var date: Long by map
+    var ga_prefix: String by map
+
+    constructor(_id: Long, title: String, image: String, date: Long, ga_prefix: String) : this(HashMap()) {
+        this._id = _id
+        this.title = title
+        this.image = image
+        this.date = date
+        this.ga_prefix = ga_prefix
+    }
+}
+
+class NewsDb(var map: MutableMap<String, Any?>) {
+    var _id: Long by map
+    var title: String by map
+    var type: Int by map
+    var image: String by map
+    var html: String by map
+
+    constructor(_id: Long, title: String, type: Int, image: String, html: String) : this(HashMap()) {
+        this._id = _id
+        this.title = title
+        this.type = type
+        this.image = image
+        this.html = html
+    }
+}
+
