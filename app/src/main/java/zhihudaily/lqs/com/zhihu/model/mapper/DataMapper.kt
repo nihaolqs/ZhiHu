@@ -47,12 +47,11 @@ class DataMapper {
         return NewsVo(html, news.title, news.image, news.type, news.id)
     }
 
-    fun mapperStoryDbList2Vo(list: List<StoryVo>): MutableList<IItem> {
+    fun mapperStoryDbList2Vo(list: List<StoryDb>): MutableList<IItem> {
         val arrayList = ArrayList<IItem>()
-        list.map {
-            StoryVo(it.images, it.type, it.id, it.ga_prefix, it.title)
-        }
-        arrayList.addAll(list)
+        arrayList.addAll(list.map {
+            StoryVo(it.image, 0, it._id, it.ga_prefix, it.title)
+        })
         return arrayList
     }
 

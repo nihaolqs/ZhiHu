@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         viewPage.adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 val bundle = Bundle()
-                bundle.putLong(DailyFragment.DATE_KET, (Date() - (position - 1)).toFormatLongDay())
+                bundle.putSerializable(DailyFragment.DATE_KET, (Date() - position))
                 return AbsFragment.getInstance(bundle, ::DailyFragment).apply { arguments = bundle }
             }
 

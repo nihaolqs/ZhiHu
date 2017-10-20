@@ -6,6 +6,7 @@ import zhihudaily.lqs.com.zhihu.presenter.interfac.IDailyFragmentPresenter
 import zhihudaily.lqs.com.zhihu.presenter.interfac.IPresenter
 import zhihudaily.lqs.com.zhihu.view.impl.DailyFragment
 import zhihudaily.lqs.com.zhihu.view.interfac.IDailyFragmentView
+import java.util.*
 import kotlin.properties.Delegates
 
 /**
@@ -20,7 +21,7 @@ class DailyFragmentPresenter: IPresenter<DailyFragmentModel,IDailyFragmentView>,
         view.notifyDataChange(vo)
     }
 
-    override fun replaceData(date:Long){
+    override fun replaceData(date:Date){
         model.getData(date)
     }
 }

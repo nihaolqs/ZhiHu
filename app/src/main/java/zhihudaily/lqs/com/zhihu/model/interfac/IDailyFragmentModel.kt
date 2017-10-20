@@ -7,5 +7,5 @@ import java.util.*
  * Created by admin on 2017/9/6.
  */
 interface IDailyFragmentModel {
-    fun getData(data:Long)
+    fun getData(date: Date)
 }

@@ -22,6 +22,7 @@ import zhihudaily.lqs.com.zhihu.model.vo.TopStorysVo
 import zhihudaily.lqs.com.zhihu.utils.getLayoutInflater
 import zhihudaily.lqs.com.zhihu.utils.startAct
 import zhihudaily.lqs.com.zhihu.view.interfac.IDailyFragmentView
+import java.util.*
 
 /**
  * Created by admin on 2017/8/29.
@@ -53,7 +54,7 @@ class DailyFragment : AbsFragment<DailyFragmentPresenter>(), IDailyFragmentView 
             val bundle = Bundle()
             var pos = posiction
             if(rvDailyListData[0].itemType == TopStorysVo.TYPE) pos--
-            bundle.putLong(DatailyActivity.DATE_KEY,arguments.getLong(DATE_KET))
+            bundle.putSerializable(DatailyActivity.DATE_KEY,arguments.getSerializable(DATE_KET))
             bundle.putInt(DatailyActivity.POSITION_KEY,pos)
             MyApp.instance.startAct<DatailyActivity>(bundle)
         })
@@ -111,7 +112,7 @@ class DailyFragment : AbsFragment<DailyFragmentPresenter>(), IDailyFragmentView 
     }
 
     override fun initData() {
-        presenter.replaceData(arguments.getLong(DATE_KET))
+        presenter.replaceData(arguments.getSerializable(DATE_KET) as Date)
     }
 
     override fun notifyDataChange(list: MutableList<IItem>) {

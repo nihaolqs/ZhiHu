@@ -40,18 +40,18 @@ class DatailyActivity : AppCompatActivity(), IDailyFragmentView, IView<DailyFrag
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dataily)
         setSupportActionBar(toolbar)
-        position = intent.getIntExtra(POSITION_KEY,0)
+        position = intent.getIntExtra(POSITION_KEY, 0)
         datailyViewPage.adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 moreStory(position)
                 val bundle = Bundle()
                 bundle.putLong(DatailyFragment.ID_KEY, (storyVoList[position] as StoryVo).id)
-                return AbsFragment.getInstance(bundle,::DatailyFragment)
+                return AbsFragment.getInstance(bundle, ::DatailyFragment)
             }
 
             override fun getCount(): Int = storyVoList.size
         }
-        presenter.replaceData(intent.getLongExtra(DATE_KEY, 10000000000L))
+        presenter.replaceData(intent.getSerializableExtra(DATE_KEY) as Date)
     }
 
     override fun notifyDataChange(list: MutableList<IItem>) {
@@ -73,27 +73,27 @@ class DatailyActivity : AppCompatActivity(), IDailyFragmentView, IView<DailyFrag
                 storyVoList.addAll(list)
                 datailyViewPage.adapter.notifyDataSetChanged()
             }
-            if(list.size == storyVoList.size) datailyViewPage.setCurrentItem(position,false)
+            if (list.size == storyVoList.size) datailyViewPage.setCurrentItem(position, false)
         }
     }
 
-    fun replaceToolbar(title:String,imageUrl:String){
+    fun replaceToolbar(title: String, imageUrl: String) {
         toolbar_layout.title = title
         image.setImageURI(imageUrl)
     }
 
     val currentDate = Date().toFormatLongDay()
 
-    fun moreStory(position :Int){
-        if(position == 0 && (storyVoList[position] as StoryVo).ga_prefix.toLong() < currentDate){
-            val longDate = (storyVoList[position] as StoryVo).ga_prefix.toLong()/100 + 20170000
-            val day = this.fromFormatLongDay(longDate-(-2)).toFormatLongDay()
-            presenter.replaceData(day)
-
-        }else if(position == storyVoList.size-1){
-            val longDate = (storyVoList[position] as StoryVo).ga_prefix.toLong()/100 + 20170000
-            val day = (this.fromFormatLongDay(longDate)).toFormatLongDay()
-            presenter.replaceData(day)
-        }
+    fun moreStory(position: Int) {
+//        if (position == 0 && (storyVoList[position] as StoryVo).ga_prefix.toLong() < currentDate) {
+//            val longDate = (storyVoList[position] as StoryVo).ga_prefix.toLong() / 100 + 20170000
+//            val day = this.fromFormatLongDay(longDate - (-2)).toFormatLongDay()
+//            presenter.replaceData(day)
+//
+//        } else if (position == storyVoList.size - 1) {
+//            val longDate = (storyVoList[position] as StoryVo).ga_prefix.toLong() / 100 + 20170000
+//            val day = (this.fromFormatLongDay(longDate)).toFormatLongDay()
+//            presenter.replaceData(day)
+//        }
     }
 }

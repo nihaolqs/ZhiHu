@@ -72,8 +72,8 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
 
     private var mX = 0;
     private var isSwipel = false
-    private var mTotalSwipel = 0
-    private var mHistorySwipel = 0
+    private var mTotalSwipel = 0f
+//    private var mHistorySwipel = 0
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event?.action == MotionEvent.ACTION_DOWN) {
@@ -81,6 +81,7 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
             Log.e("onTouchEvent:mx", mX.toString())
             if (mX < 80 || mX > width - 80) {
                 parent.requestDisallowInterceptTouchEvent(true)
+                mTotalSwipel = if(mX < 80) -0.001f else 0.001f
                 isSwipel = true;
             } else {
                 parent.requestDisallowInterceptTouchEvent(false)
@@ -97,7 +98,7 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
         if (event?.action == MotionEvent.ACTION_UP) {
             isClickable = !isSwipel
             if (isSwipel) {
-                val animator = ObjectAnimator.ofFloat(mRootView, "translationX", -mTotalSwipel.toFloat(), 0f)
+                val animator = ObjectAnimator.ofFloat(mRootView, "translationX", -mTotalSwipel, 0f)
                 animator.setAutoCancel(true)
                 animator.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator?) {
@@ -108,10 +109,10 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
                     }
                 })
                 animator.duration = 500
-                mRootView.scrollBy(-mTotalSwipel, 0)
+                mRootView.scrollBy(-mTotalSwipel.toInt(), 0)
                 animator.start()
-                mHistorySwipel = mTotalSwipel
-                mTotalSwipel = 0
+//                mHistorySwipel = mTotalSwipel
+                mTotalSwipel = 0f
             }
         }
         return super.onTouchEvent(event)
@@ -120,7 +121,7 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
     private fun swipel(event: MotionEvent) {
         var x = mX - event.x.toInt()
         Log.e("X", x.toString())
-        if ((mTotalSwipel <= 0 && Math.abs(mTotalSwipel) < leftMenuLayout.measuredWidth) || (mTotalSwipel >= 0 && Math.abs(mTotalSwipel) < rightMenuLayout.measuredWidth)) {
+        if ((mTotalSwipel <= 0 && Math.abs(mTotalSwipel) < leftMenuLayout.measuredWidth) || (mTotalSwipel > 0 && Math.abs(mTotalSwipel) < rightMenuLayout.measuredWidth)) {
             mRootView.scrollBy(x, 0)
             mTotalSwipel += x
             mX = event.x.toInt()

@@ -14,5 +14,4 @@ class NewsProvider(val proveders: List<INewsProvider> = listOf(NewsDbProvider.in
 
     override fun getNewsById(id: Long): NewsVo? =
             proveders.firstResult { it.getNewsById(id) }
-
 }

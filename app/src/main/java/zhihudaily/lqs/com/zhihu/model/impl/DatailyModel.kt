@@ -17,7 +17,7 @@ class DatailyModel : IDatailyModel, IModel<DatailyPresenter> {
 
     override var presenter: DatailyPresenter by Delegates.notNull<DatailyPresenter>()
 
-    val provider: NewsProvider by lazy { NewsProvider.instance }
+    val provider: NewsProvider by lazy { NewsProvider() }
 
     override fun getData(id: Long) {
         doAsync {

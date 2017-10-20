@@ -61,7 +61,7 @@ object NewsTable {
     val ID = "_id"
 }
 
-class StoryDb(var map: MutableMap<String, Any?>) {
+class StoryDb(var map: MutableMap<String, Any>) {
     var _id: Long by map
     var title: String by map
     var image: String by map
@@ -77,7 +77,7 @@ class StoryDb(var map: MutableMap<String, Any?>) {
     }
 }
 
-class NewsDb(var map: MutableMap<String, Any?>) {
+class NewsDb(var map: MutableMap<String, Any>) {
     var _id: Long by map
     var title: String by map
     var type: Int by map

@@ -61,4 +61,4 @@ inline fun <T, R> Iterable<T>.firstResult(predicate: (T) -> R): R {
     throw NoSuchElementException("No element matching predicate was found.")
 }
 
-inline fun <T,R:Any?> MutableMap<T,R>.toVararyArray():Array<out Pair<T,R>> = this.map{it.key to it.value}.toTypedArray()
+inline fun <T,R:Any> MutableMap<T,R>.toVararyArray(): Array<Pair<T, R>> = this.map{it.key to it.value}.toTypedArray()

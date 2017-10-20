@@ -22,13 +22,15 @@ import kotlin.properties.Delegates
 class DailyFragmentModel : IModel<DailyFragmentPresenter>, IDailyFragmentModel {
     override var presenter: DailyFragmentPresenter by Delegates.notNull<DailyFragmentPresenter>()
 
-    val dailyProvider by lazy { DailyProvider.instance }
+    val dailyProvider by lazy { DailyProvider() }
 
-    override fun getData(data: Long) {
+    override fun getData(date: Date) {
         doAsync {
-            val vo = dailyProvider.getDailyByDay(data)
+            val vo = dailyProvider.getDailyByDay(date)
            uiThread {
-               presenter.notifiDataForChange(vo)
+               if (vo != null) {
+                   presenter.notifiDataForChange(vo)
+               }
            }
         }
     }
