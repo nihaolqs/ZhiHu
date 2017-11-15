@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import org.jetbrains.anko.db.MapRowParser
 import org.jetbrains.anko.db.SelectQueryBuilder
+import zhihudaily.lqs.com.zhihu.model.vo.StoryVo
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,6 +20,8 @@ import java.util.*
 public fun Context.getLayoutInflater() = LayoutInflater.from(this)
 
 fun Date.toFormatLongDay() = SimpleDateFormat("yyyyMMdd").format(this).toLong()
+
+fun Date.toFormatDay() = SimpleDateFormat("MM-dd HH:mm").format(this)
 
 inline fun <T> T.fromFormatLongDay(date: Long): Date = SimpleDateFormat("yyyyMMdd").parse(date.toString())
 
@@ -62,3 +65,4 @@ inline fun <T, R> Iterable<T>.firstResult(predicate: (T) -> R): R {
 }
 
 inline fun <T,R:Any> MutableMap<T,R>.toVararyArray(): Array<Pair<T, R>> = this.map{it.key to it.value}.toTypedArray()
+

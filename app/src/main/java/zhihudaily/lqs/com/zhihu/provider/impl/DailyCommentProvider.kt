@@ -3,11 +3,10 @@ package zhihudaily.lqs.com.zhihu.provider.impl
 import android.util.Log
 import org.jetbrains.anko.db.insert
 import zhihudaily.lqs.com.zhihu.adapter.IItem
-import zhihudaily.lqs.com.zhihu.comment.LastNewsComment
+import zhihudaily.lqs.com.zhihu.connection.LastNewsConnection
 import zhihudaily.lqs.com.zhihu.model.dto.DbHelp
 import zhihudaily.lqs.com.zhihu.model.dto.StoryTable
 import zhihudaily.lqs.com.zhihu.model.mapper.DataMapper
-import zhihudaily.lqs.com.zhihu.model.vo.StoryVo
 import zhihudaily.lqs.com.zhihu.provider.interfac.IDailyProvider
 import zhihudaily.lqs.com.zhihu.utils.minus
 import zhihudaily.lqs.com.zhihu.utils.toFormatLongDay
@@ -22,7 +21,7 @@ class DailyCommentProvider : IDailyProvider {
         val instance by lazy { DailyCommentProvider() }
     }
 
-    val lastNewsComment: LastNewsComment by lazy { LastNewsComment() }
+    val lastNewsComment: LastNewsConnection by lazy { LastNewsConnection() }
 
     val dataMapper: DataMapper by lazy { DataMapper.instance }
 

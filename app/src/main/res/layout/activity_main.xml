@@ -5,10 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="zhihudaily.lqs.com.zhihu.view.MainActivity">
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
+
 </android.support.constraint.ConstraintLayout>

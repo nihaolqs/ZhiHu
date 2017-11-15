@@ -1,13 +1,8 @@
 package zhihudaily.lqs.com.zhihu.model.mapper
 
 import zhihudaily.lqs.com.zhihu.adapter.IItem
-import zhihudaily.lqs.com.zhihu.model.dto.Daily
-import zhihudaily.lqs.com.zhihu.model.dto.News
-import zhihudaily.lqs.com.zhihu.model.dto.NewsDb
-import zhihudaily.lqs.com.zhihu.model.dto.StoryDb
-import zhihudaily.lqs.com.zhihu.model.vo.NewsVo
-import zhihudaily.lqs.com.zhihu.model.vo.StoryVo
-import zhihudaily.lqs.com.zhihu.model.vo.TopStorysVo
+import zhihudaily.lqs.com.zhihu.model.dto.*
+import zhihudaily.lqs.com.zhihu.model.vo.*
 
 /**
  * Created by admin on 2017/8/31.
@@ -65,5 +60,24 @@ class DataMapper {
 
     fun mapperNews2NewsDb(news: News): NewsDb = news.let {
         NewsDb(it.id, it.title, it.type, it.image, news.creatHtml())
+    }
+
+    fun mapperCommentList2Vo(list: List<Comment>): MutableList<IItem> {
+        val result = ArrayList<IItem>()
+        list.forEach {
+            result.add(CommentItemHeadVo(it.avatar, it.author, it.likes, it))
+            result.add(CommentItemContentVo(it.content, it))
+            it.reply_to?.apply {
+                result.add(CommentTtemReplyToVo(it.reply_to.author, it.reply_to.content, it))
+            }
+            result.add(CommentItemFootVo(it.time, it))
+        }
+        return result
+    }
+
+    fun mapperStoryVo2StoryDb(vo: StoryVo, date: Long): StoryDb = StoryDb(vo.id, vo.title, vo.images, date, vo.ga_prefix)
+
+    fun mapperThemesToThemeVoList(themes:Themes)= themes.others.map {
+        ThemeVo(it.name,it.id)
     }
 }

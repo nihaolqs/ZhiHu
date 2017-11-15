@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#FF000000"
+        android:layout_marginBottom="88dp"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:placeholderImage="@mipmap/ic_launcher"
+        app:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="用户名"
+        android:textColor="#FF000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sdv_avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_likes_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_likes"
+        app:layout_constraintTop_toTopOf="parent"
+        app:placeholderImage="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

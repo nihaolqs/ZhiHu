@@ -1,7 +1,7 @@
-package zhihudaily.lqs.com.zhihu.comment
+package zhihudaily.lqs.com.zhihu.connection
 
 import com.google.gson.Gson
-import zhihudaily.lqs.com.zhihu.comment.IComment.Companion.HOST
+import zhihudaily.lqs.com.zhihu.connection.IConnection.Companion.HOST
 import zhihudaily.lqs.com.zhihu.model.dto.News
 import java.net.URL
 import kotlin.properties.Delegates
@@ -9,7 +9,7 @@ import kotlin.properties.Delegates
 /**
  * Created by admin on 2017/9/13.
  */
-class DatailyComment : IComment<News> {
+class DatailyConnection : IConnection<News> {
     companion object {
         val NEWS_URI = HOST+"news/"
     }

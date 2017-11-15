@@ -1,9 +1,9 @@
-package zhihudaily.lqs.com.zhihu.comment
+package zhihudaily.lqs.com.zhihu.connection
 
 /**
  * Created by admin on 2017/8/31.
  */
-interface IComment<T> {
+interface IConnection<T> {
     companion object {
         val HOST:String = "https://news-at.zhihu.com/api/4/"
     }

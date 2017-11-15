@@ -17,15 +17,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewPage.adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
-            override fun getItem(position: Int): Fragment {
-                val bundle = Bundle()
-                bundle.putSerializable(DailyFragment.DATE_KET, (Date() - position))
-                return AbsFragment.getInstance(bundle, ::DailyFragment).apply { arguments = bundle }
-            }
 
-            override fun getCount(): Int = 365
-
-        }
     }
 }

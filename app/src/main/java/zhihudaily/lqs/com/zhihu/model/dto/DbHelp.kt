@@ -27,6 +27,15 @@ class DbHelp(ctx: Context = MyApp.instance) : ManagedSQLiteOpenHelper(ctx, NAME,
                 StoryTable.IMAGE to TEXT,
                 StoryTable.GA_PREFIX to TEXT
         )
+        db?.createTable(
+                CollectStoryTable.NAME,
+                true,
+                CollectStoryTable.ID to INTEGER + PRIMARY_KEY,
+                CollectStoryTable.TITLE to TEXT,
+                CollectStoryTable.DATE to TEXT,
+                CollectStoryTable.IMAGE to TEXT,
+                CollectStoryTable.GA_PREFIX to TEXT
+        )
 
         db?.createTable(
                 NewsTable.NAME,
@@ -45,6 +54,15 @@ class DbHelp(ctx: Context = MyApp.instance) : ManagedSQLiteOpenHelper(ctx, NAME,
 
 object StoryTable {
     val NAME = "t_story"
+    val IMAGE = "image"
+    val ID = "_id"
+    val GA_PREFIX = "ga_prefix"
+    val TITLE = "title"
+    val DATE = "date"
+}
+
+object CollectStoryTable {
+    val NAME = "t_collect"
     val IMAGE = "image"
     val ID = "_id"
     val GA_PREFIX = "ga_prefix"

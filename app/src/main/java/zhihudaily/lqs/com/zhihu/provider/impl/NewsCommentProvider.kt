@@ -2,7 +2,7 @@ package zhihudaily.lqs.com.zhihu.provider.impl
 
 import android.util.Log
 import org.jetbrains.anko.db.insert
-import zhihudaily.lqs.com.zhihu.comment.DatailyComment
+import zhihudaily.lqs.com.zhihu.connection.DatailyConnection
 import zhihudaily.lqs.com.zhihu.model.dto.DbHelp
 import zhihudaily.lqs.com.zhihu.model.dto.NewsTable
 import zhihudaily.lqs.com.zhihu.model.mapper.DataMapper
@@ -14,7 +14,7 @@ import zhihudaily.lqs.com.zhihu.utils.toVararyArray
  * Created by admin on 2017/10/18.
  */
 class NewsCommentProvider : INewsProvider {
-    val datailyComment: DatailyComment by lazy { DatailyComment() }
+    val datailyComment: DatailyConnection by lazy { DatailyConnection() }
 
     val dataMapper: DataMapper by lazy { DataMapper.instance }
 

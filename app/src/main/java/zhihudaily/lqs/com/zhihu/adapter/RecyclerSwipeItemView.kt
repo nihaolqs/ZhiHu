@@ -38,6 +38,7 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
         }
     }
 
+    private var isSwipeFunTrigger = true
     private var mRootView: View by Delegates.notNull<View>()
 
     init {
@@ -81,7 +82,7 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
             Log.e("onTouchEvent:mx", mX.toString())
             if (mX < 80 || mX > width - 80) {
                 parent.requestDisallowInterceptTouchEvent(true)
-                mTotalSwipel = if(mX < 80) -0.001f else 0.001f
+                mTotalSwipel = if (mX < 80) -0.001f else 0.001f
                 isSwipel = true;
             } else {
                 parent.requestDisallowInterceptTouchEvent(false)
@@ -106,6 +107,7 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
                         isClickable = true
                         animator.cancel()
                         Log.e("onAnimationEnd", "onAnimationEnd")
+                        isSwipeFunTrigger = true
                     }
                 })
                 animator.duration = 500
@@ -125,8 +127,9 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
             mRootView.scrollBy(x, 0)
             mTotalSwipel += x
             mX = event.x.toInt()
-        } else {
-            if (mTotalSwipel < 0) mLeftSwipeListener?.invoke(leftMenuLayout, mRootView) else mRightSwipeListener?.invoke(rightMenuLayout, mRootView)
+        } else if(isSwipeFunTrigger){
+            if (mTotalSwipel < 0) {mLeftSwipeListener?.invoke(leftMenuLayout, mRootView) }else mRightSwipeListener?.invoke(rightMenuLayout, mRootView)
+            isSwipeFunTrigger = false
         }
     }
 
@@ -139,5 +142,7 @@ class RecyclerSwipeItemLayout(context: Context) : FrameLayout(context) {
     fun setOnRightSwipelMenuListener(rightSwipelListener: (menuView: View, rootView: View) -> Unit) {
         mRightSwipeListener = rightSwipelListener
     }
-
+    enum class MenuType {
+        LEFTNEMU, RIGHTMENU
+    }
 }

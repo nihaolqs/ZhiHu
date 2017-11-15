@@ -17,10 +17,18 @@ import zhihudaily.lqs.com.zhihu.model.vo.StoryVo
 import zhihudaily.lqs.com.zhihu.presenter.impl.DailyFragmentPresenter
 import kotlinx.android.synthetic.main.daily_list_item.view.*
 import kotlinx.android.synthetic.main.daily_list_item_banner.view.*
+import kotlinx.android.synthetic.main.layout_story_left_menu.view.*
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
+import zhihudaily.lqs.com.zhihu.adapter.RecyclerSwipeItemLayout
 import zhihudaily.lqs.com.zhihu.application.MyApp
+import zhihudaily.lqs.com.zhihu.model.dto.CollectStoryTable
+import zhihudaily.lqs.com.zhihu.model.dto.DbHelp
+import zhihudaily.lqs.com.zhihu.model.dto.StoryDb
+import zhihudaily.lqs.com.zhihu.model.mapper.DataMapper
 import zhihudaily.lqs.com.zhihu.model.vo.TopStorysVo
-import zhihudaily.lqs.com.zhihu.utils.getLayoutInflater
-import zhihudaily.lqs.com.zhihu.utils.startAct
+import zhihudaily.lqs.com.zhihu.utils.*
 import zhihudaily.lqs.com.zhihu.view.interfac.IDailyFragmentView
 import java.util.*
 
@@ -53,9 +61,9 @@ class DailyFragment : AbsFragment<DailyFragmentPresenter>(), IDailyFragmentView 
         }, { data: IItem, view: View, posiction: Int ->
             val bundle = Bundle()
             var pos = posiction
-            if(rvDailyListData[0].itemType == TopStorysVo.TYPE) pos--
-            bundle.putSerializable(DatailyActivity.DATE_KEY,arguments.getSerializable(DATE_KET))
-            bundle.putInt(DatailyActivity.POSITION_KEY,pos)
+            if (rvDailyListData[0].itemType == TopStorysVo.TYPE) pos--
+            bundle.putSerializable(DatailyActivity.DATE_KEY, arguments.getSerializable(DATE_KET))
+            bundle.putInt(DatailyActivity.POSITION_KEY, pos)
             MyApp.instance.startAct<DatailyActivity>(bundle)
         })
         recyclerAdapter.registerView(TopStorysVo.TYPE, R.layout.daily_list_item_banner, { data: IItem, view: View ->
@@ -92,15 +100,45 @@ class DailyFragment : AbsFragment<DailyFragmentPresenter>(), IDailyFragmentView 
         }, { data: IItem, view: View, posiction: Int ->
 
         })
+        recyclerAdapter.registerSwipelMenu(StoryVo.TYPE, RecyclerSwipeItemLayout.MenuType.LEFTNEMU, R.layout.layout_story_left_menu,
+                { data, view ->
+                    //                    view.sdv_collect.setActualImageResource(R.mipmap.uncollect)
+                    var isCollect = false
+                    DbHelp.instance.use {
+                        select(CollectStoryTable.NAME).whereSimple("${CollectStoryTable.ID} = ${(data as StoryVo).id}").parseOpt {
+                            isCollect = true
+                        }
+                    }
+                    if (isCollect) view.sdv_collect.sdv_collect.setActualImageResource(R.mipmap.collect) else view.sdv_collect.setActualImageResource(R.mipmap.uncollect)
+                    view.tag = isCollect
+                },
+                { data, menuVeiw, rootView, posiction ->
+                    menuVeiw.sdv_collect.setActualImageResource(R.mipmap.collect)
+                    var isCollect = menuVeiw.tag as Boolean
+                    isCollect = !isCollect
+                    if (isCollect) {
+                        menuVeiw.sdv_collect.sdv_collect.setActualImageResource(R.mipmap.collect)
+                        DbHelp.instance.use {
+                            val array = DataMapper.instance.mapperStoryVo2StoryDb(data as StoryVo, 0L).map.toVararyArray()
+                            insert(CollectStoryTable.NAME, *array)
+                        }
+                    } else {
+                        menuVeiw.sdv_collect.sdv_collect.setActualImageResource(R.mipmap.uncollect)
+                        DbHelp.instance.use {
+                            delete(CollectStoryTable.NAME,"${CollectStoryTable.ID} = ${(data as StoryVo).id}")
+                        }
+                    }
+                    menuVeiw.tag = isCollect
+                })
         rvDailyList.adapter = recyclerAdapter
 
-        val callback = object :ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT,ItemTouchHelper.LEFT){
+        val callback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT, ItemTouchHelper.LEFT) {
             override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
                 return false
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                Log.e("direction",direction.toString())
+                Log.e("direction", direction.toString())
                 rvDailyListData.removeAt(viewHolder!!.adapterPosition)
                 rvDailyList.adapter.notifyItemRemoved(viewHolder!!.adapterPosition)
             }

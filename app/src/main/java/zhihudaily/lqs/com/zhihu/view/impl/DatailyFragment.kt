@@ -27,6 +27,7 @@ class DatailyFragment : AbsFragment<DatailyPresenter>(), IDatailyView {
     }
 
     var mNewsVo: NewsVo? = null
+    var id:Long = 0L
 
     override val presenter: DatailyPresenter by lazy { DatailyPresenter().apply { view = this@DatailyFragment } }
 
@@ -35,18 +36,16 @@ class DatailyFragment : AbsFragment<DatailyPresenter>(), IDatailyView {
         if (isVisibleToUser) {
             mNewsVo?.apply {
                 webView?.loadData(html, "text/HTML", "utf-8")
-                (activity as DatailyActivity).replaceToolbar(title, image)
+                (activity as DatailyActivity).replaceToolbar(id,title, image)
             }
         }
     }
 
     override fun replaceData(newsVo: NewsVo) {
-//        toolbar_layout.title = newsVo.title
-//        image.setImageURI(newsVo.image)
 
         if (userVisibleHint) {
             webView?.loadData(newsVo.html, "text/HTML", "utf-8")
-            (activity as DatailyActivity).replaceToolbar(newsVo.title, newsVo.image)
+            (activity as DatailyActivity).replaceToolbar(id,newsVo.title, newsVo.image)
         }
         this.mNewsVo = newsVo
     }
@@ -54,17 +53,11 @@ class DatailyFragment : AbsFragment<DatailyPresenter>(), IDatailyView {
     override val layoutRse = R.layout.fragment_dataily
 
     override fun initData() {
-        val id = arguments.getLong(ID_KEY, 0)
+        id = arguments.getLong(ID_KEY, 0)
         presenter.replaceData(id)
     }
 
     override fun initUi(view: View?) {
-//        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
+
     }
-
-
 }

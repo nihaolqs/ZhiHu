@@ -43,3 +43,16 @@ data class ThemeDetail(val description: String, val background: String, val colo
 
 data class News(val body: String, val image_source: String, val title: String, val image: String, val vshare_url: String,
                 val js: List<String>, val ga_prefix: String, val images: List<String>, val type: Int, val id: Long, val css: List<String>)
+
+/**
+ * 新闻额外信息
+ */
+data class Extra(val long_comments: Int, val popularity: Int, val short_comments: Int, val comments: Int)
+
+/**
+ *评论信息
+ */
+data class Comment(val author: String, val content: String, val avatar: String, val time: Long, val id: Long, val likes: Int, val reply_to: Comment?)
+
+data class CommentList(val comments:List<Comment>)
+
